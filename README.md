@@ -963,4 +963,8 @@ int main(int argc, char **argv)
 <img width="883" height="170" alt="image" src="https://github.com/user-attachments/assets/956c84e3-9622-4cc1-81e0-3cce20a967fd" />
 
 ## RESULT:
-Thus, Implementation of sum arrays on host and device is done in nvcc cuda using random number.
+- block.x = 1024: Best performance as it fully utilizes maximum threads per block.
+- block.x = 1023: Slightly lower performance due to incomplete warp (not multiple of 32).
+- block.x = 256 (2 elements/thread): Improved efficiency by reducing thread overhead and better workload per thread.
+- block.x = 512: Good performance since it is a multiple of 32 → efficient warp utilization.
+- **Conclusion: Efficient performance is achieved with block sizes that are multiples of 32 (256, 512, 1024), while 1023 is less efficient, and assigning more work per thread further improves performance.**
